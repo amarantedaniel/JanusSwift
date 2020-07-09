@@ -1,6 +1,6 @@
 import Foundation
 
-struct LongPollResult: Decodable {
+struct LongPollWatchResult: Decodable {
     let sessionId: Int
     let jsep: JSEP
 }

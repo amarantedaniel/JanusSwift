@@ -7,9 +7,11 @@ final class JanusTests: XCTestCase {
         let expectation = XCTestExpectation()
         janus.createSession { sessionId in
             janus.attachPlugin(sessionId: sessionId, plugin: .streaming) { handleId in
-                janus.watch(sessionId: sessionId, handleId: handleId) { jsep in
-                    print(jsep)
-                    expectation.fulfill()
+                janus.watch(sessionId: sessionId, handleId: handleId) { sdp in
+                    janus.start(sessionId: sessionId, handleId: handleId, sdp: sdp) {
+                        print("terminei")
+                        expectation.fulfill()
+                    }
                 }
             }
         }

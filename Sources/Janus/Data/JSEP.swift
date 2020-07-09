@@ -1,10 +1,10 @@
 import Foundation
 
-struct JSEP: Decodable {
+struct JSEP: Codable {
     let type: JSEPType
     let sdp: String
     
-    enum JSEPType: String, Decodable {
+    enum JSEPType: String, Codable {
         case offer = "offer"
         case answer = "answer"
     }

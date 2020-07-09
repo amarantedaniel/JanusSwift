@@ -31,15 +31,28 @@ public struct Janus {
                                    body: WatchRequest.Body())
         apiClient.request(request: .watch(sessionId, handleId, request)) { (result: Result<WatchResponse, Error>) in
             if case .success = result {
-                self.sendLongPoll(sessionId: sessionId, completion: completion)
+                self.sendLongPoll(sessionId: sessionId) { (result: Result<LongPollWatchResult, Error>) in
+                    if case let .success(response) = result {
+                        completion(response.jsep.sdp)
+                    }
+                }
             }
         }
     }
 
-    private func sendLongPoll(sessionId: Int, completion: @escaping (String) -> Void) {
-        apiClient.request(request: .longPoll(sessionId)) { (result: Result<LongPollResult, Error>) in
-            if case let .success(response) = result {
-                completion(response.jsep.sdp)
+    private func sendLongPoll<T: Decodable>(sessionId: Int, completion: @escaping (Result<T, Error>) -> Void) {
+        apiClient.request(request: .longPoll(sessionId), completion: completion)
+    }
+
+    public func start(sessionId: Int, handleId: Int, sdp: String, completion: @escaping () -> Void) {
+        let transaction = "start"
+        let jsep = JSEP(type: .answer, sdp: sdp)
+        let request = StartRequest(transaction: transaction, jsep: jsep)
+        apiClient.request(request: .start(sessionId, handleId, request)) { (result: Result<StartResponse, Error>) in
+            if case .success = result {
+                self.sendLongPoll(sessionId: sessionId) { (_: Result<LongPollStartResult, Error>) in
+                    completion()
+                }
             }
         }
     }

@@ -4,13 +4,14 @@ enum APIRoute: URLRequestConvertible {
     case create(CreateRequest)
     case attachPlugin(Int, AttachPluginRequest)
     case watch(Int, Int, WatchRequest)
+    case start(Int, Int, StartRequest)
     case longPoll(Int)
     
     private var method: String {
         switch self {
         case .longPoll:
             return "GET"
-        case .create, .attachPlugin, .watch:
+        case .create, .attachPlugin, .watch, .start:
             return "POST"
         }
     }
@@ -26,6 +27,8 @@ enum APIRoute: URLRequestConvertible {
             return baseURL.appendingPathComponent("/\(sessionId)")
         case let .watch(sessionId, handleId, _):
             return baseURL.appendingPathComponent("/\(sessionId)/\(handleId)")
+        case let .start(sessionId, handleId, _):
+            return baseURL.appendingPathComponent("/\(sessionId)/\(handleId)")
         }
     }
     
@@ -38,6 +41,8 @@ enum APIRoute: URLRequestConvertible {
         case let .attachPlugin(_, request):
             return try? encoder.encode(request)
         case let .watch(_, _, request):
+            return try? encoder.encode(request)
+        case let .start(_, _, request):
             return try? encoder.encode(request)
         case .longPoll:
             return nil
