@@ -6,9 +6,11 @@ final class JanusTests: XCTestCase {
         let janus = Janus()
         let expectation = XCTestExpectation()
         janus.createSession { sessionId in
-            janus.attachPlugin(sessionId: sessionId, plugin: .streaming) { value in
-                print(value)
-                expectation.fulfill()
+            janus.attachPlugin(sessionId: sessionId, plugin: .streaming) { handleId in
+                janus.watch(sessionId: sessionId, handleId: handleId) { jsep in
+                    print(jsep)
+                    expectation.fulfill()
+                }
             }
         }
 
