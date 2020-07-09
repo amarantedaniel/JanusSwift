@@ -25,7 +25,7 @@ public struct Janus {
         }
     }
 
-    public func watch(sessionId: Int, handleId: Int, completion: @escaping (JSEP) -> Void) {
+    public func watch(sessionId: Int, handleId: Int, completion: @escaping (String) -> Void) {
         let transaction = "watch"
         let request = WatchRequest(transaction: transaction,
                                    body: WatchRequest.Body())
@@ -36,10 +36,10 @@ public struct Janus {
         }
     }
 
-    private func sendLongPoll(sessionId: Int, completion: @escaping (JSEP) -> Void) {
+    private func sendLongPoll(sessionId: Int, completion: @escaping (String) -> Void) {
         apiClient.request(request: .longPoll(sessionId)) { (result: Result<LongPollResult, Error>) in
             if case let .success(response) = result {
-                completion(response.jsep)
+                completion(response.jsep.sdp)
             }
         }
     }
