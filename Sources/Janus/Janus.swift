@@ -25,6 +25,20 @@ public struct Janus {
         }
     }
 
+    public func trickle(sessionId: Int,
+                        handleId: Int,
+                        candidate: String,
+                        sdpMLineIndex: Int,
+                        sdpMid: String,
+                        completion: @escaping () -> Void) {
+        let transaction = "trickle"
+        let candidate = TrickleRequest.Candidate(candidate: candidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid)
+        let request = TrickleRequest(transaction: transaction, candidate: candidate)
+        apiClient.request(request: .trickle(sessionId, handleId, request)) { (_: Result<TrickleResponse, Error>) in
+            completion()
+        }
+    }
+
     public func watch(sessionId: Int, handleId: Int, completion: @escaping (String) -> Void) {
         let transaction = "watch"
         let request = WatchRequest(transaction: transaction,
@@ -40,10 +54,6 @@ public struct Janus {
         }
     }
 
-    private func sendLongPoll<T: Decodable>(sessionId: Int, completion: @escaping (Result<T, Error>) -> Void) {
-        apiClient.request(request: .longPoll(sessionId), completion: completion)
-    }
-
     public func start(sessionId: Int, handleId: Int, sdp: String, completion: @escaping () -> Void) {
         let transaction = "start"
         let jsep = JSEP(type: .answer, sdp: sdp)
@@ -55,5 +65,9 @@ public struct Janus {
                 }
             }
         }
+    }
+
+    private func sendLongPoll<T: Decodable>(sessionId: Int, completion: @escaping (Result<T, Error>) -> Void) {
+        apiClient.request(request: .longPoll(sessionId), completion: completion)
     }
 }
