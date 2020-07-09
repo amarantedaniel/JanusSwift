@@ -1,6 +1,6 @@
 import Foundation
 
-struct JSEP: Decodable {
+public struct JSEP: Decodable {
     let type: JSEPType
     let sdp: String
     

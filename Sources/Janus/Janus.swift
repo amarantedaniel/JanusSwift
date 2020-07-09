@@ -1,9 +1,11 @@
 import Foundation
 
-struct Janus {
-    let apiClient = APIClient()
+public struct Janus {
+    private let apiClient = APIClient()
 
-    func createSession(completion: @escaping (Int) -> Void) {
+    public init() {}
+
+    public func createSession(completion: @escaping (Int) -> Void) {
         let transactionId = "create"
         let request = CreateRequest(transaction: transactionId)
         apiClient.request(request: .create(request)) { (result: Result<CreateResponse, Error>) in
@@ -13,7 +15,7 @@ struct Janus {
         }
     }
 
-    func attachPlugin(sessionId: Int, plugin: Plugin, completion: @escaping (Int) -> Void) {
+    public func attachPlugin(sessionId: Int, plugin: Plugin, completion: @escaping (Int) -> Void) {
         let transaction = "attach"
         let request = AttachPluginRequest(transaction: transaction, plugin: plugin)
         apiClient.request(request: .attachPlugin(sessionId, request)) { (result: Result<AttachPluginResponse, Error>) in
@@ -23,7 +25,7 @@ struct Janus {
         }
     }
 
-    func watch(sessionId: Int, handleId: Int, completion: @escaping (JSEP) -> Void) {
+    public func watch(sessionId: Int, handleId: Int, completion: @escaping (JSEP) -> Void) {
         let transaction = "watch"
         let request = WatchRequest(transaction: transaction,
                                    body: WatchRequest.Body())
