@@ -1,12 +1,18 @@
-import XCTest
 @testable import Janus
+import XCTest
 
 final class JanusTests: XCTestCase {
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(Janus().text, "Hello, World!")
+        let janus = Janus()
+        let expectation = XCTestExpectation()
+        janus.createSession { sessionId in
+            janus.attachPlugin(sessionId: sessionId, plugin: .streaming) { value in
+                print(value)
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 10.0)
     }
 
     static var allTests = [
