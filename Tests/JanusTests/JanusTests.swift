@@ -3,17 +3,15 @@ import XCTest
 
 final class JanusTests: XCTestCase {
     func testExample() {
-        let janus = Janus()
+        let session = JanusSession()
         let expectation = XCTestExpectation()
-        janus.createSession { sessionId in
-            janus.attachPlugin(sessionId: sessionId, plugin: .streaming) { handleId in
-                janus.watch(sessionId: sessionId, handleId: handleId) { sdp in
-                    janus.start(sessionId: sessionId, handleId: handleId, sdp: sdp) {
-                        janus.trickle(sessionId: sessionId,
-                                      handleId: handleId,
-                                      candidate: "candidate:608181405 1 udp 1685987071 189.6.237.77 27004 typ srflx raddr 192.168.0.9 rport 61921 generation 0 ufrag sX\\/4 network-id 1 network-cost 10",
-                                      sdpMLineIndex: 0,
-                                      sdpMid: "audio") {
+        session.createSession {
+            session.attachPlugin(plugin: .streaming) {
+                session.watch { sdp in
+                    session.start(sdp: sdp) {
+                        session.trickle(candidate: "candidate:608181405 1 udp 1685987071 189.6.237.77 27004 typ srflx raddr 192.168.0.9 rport 61921 generation 0 ufrag sX\\/4 network-id 1 network-cost 10",
+                                        sdpMLineIndex: 0,
+                                        sdpMid: "audio") {
                             print("terminei")
                             expectation.fulfill()
                         }

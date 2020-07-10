@@ -1,5 +1,3 @@
 import Foundation
 
-struct TrickleResponse: Decodable {
-    
-}
+struct TrickleResponse: Decodable {}
