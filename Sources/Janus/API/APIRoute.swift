@@ -36,7 +36,6 @@ enum APIRoute: URLRequestConvertible {
     
     private var body: Data? {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         switch self {
         case let .create(request):
             return try? encoder.encode(request)
