@@ -43,11 +43,11 @@ public class JanusSession {
         }
     }
 
-    public func watch(streamId: String, completion: @escaping (String) -> Void) {
+    public func watch(streamId: String, pin: String? = nil, completion: @escaping (String) -> Void) {
         guard let sessionId = sessionId else { return }
         guard let handleId = handleId else { return }
         let transaction = "watch"
-        let request = WatchRequest(transaction: transaction, streamId: streamId)
+        let request = WatchRequest(transaction: transaction, streamId: streamId, pin: pin)
         apiClient.request(request: .watch(sessionId, handleId, request)) { (result: Result<WatchResponse, Error>) in
             if case .success = result {
                 self.sendLongPoll { (result: Result<LongPollWatchResult, Error>) in
