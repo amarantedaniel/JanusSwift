@@ -7,6 +7,6 @@ struct WatchRequest: Encodable {
     
     struct Body: Encodable {
         let request = "watch"
-        let id = 1
+        let id = "1"
     }
 }

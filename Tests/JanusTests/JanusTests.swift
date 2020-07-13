@@ -3,7 +3,7 @@ import XCTest
 
 final class JanusTests: XCTestCase {
     func testExample() {
-        let session = JanusSession()
+        let session = JanusSession(baseUrl: URL(string: "http://localhost:8088/janus")!)
         let expectation = XCTestExpectation()
         session.createSession {
             session.attachPlugin(plugin: .streaming) {

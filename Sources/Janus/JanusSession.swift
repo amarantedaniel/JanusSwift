@@ -1,11 +1,13 @@
 import Foundation
 
 public class JanusSession {
-    private let apiClient = APIClient()
+    private let apiClient: APIClient
     private var sessionId: Int?
     private var handleId: Int?
 
-    public init() {}
+    public init(baseUrl: URL) {
+        self.apiClient = APIClient(baseUrl: baseUrl)
+    }
 
     public func createSession(completion: @escaping () -> Void) {
         let transactionId = "create"

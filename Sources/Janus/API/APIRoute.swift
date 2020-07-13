@@ -17,21 +17,20 @@ enum APIRoute: URLRequestConvertible {
         }
     }
     
-    private var url: URL {
-        let baseURL = URL(string: "https://janus.conf.meetecho.com/janus")!
+    private func url(baseUrl: URL) -> URL {
         switch self {
         case .create:
-            return baseURL
+            return baseUrl
         case let .attachPlugin(sessionId, _):
-            return baseURL.appendingPathComponent("/\(sessionId)")
+            return baseUrl.appendingPathComponent("/\(sessionId)")
         case let .longPoll(sessionId):
-            return baseURL.appendingPathComponent("/\(sessionId)")
+            return baseUrl.appendingPathComponent("/\(sessionId)")
         case let .watch(sessionId, handleId, _):
-            return baseURL.appendingPathComponent("/\(sessionId)/\(handleId)")
+            return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
         case let .start(sessionId, handleId, _):
-            return baseURL.appendingPathComponent("/\(sessionId)/\(handleId)")
+            return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
         case let .trickle(sessionId, handleId, _):
-            return baseURL.appendingPathComponent("/\(sessionId)/\(handleId)")
+            return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
         }
     }
     
@@ -54,8 +53,8 @@ enum APIRoute: URLRequestConvertible {
         }
     }
     
-    func asURLRequest() -> URLRequest {
-        var urlRequest = URLRequest(url: url)
+    func asURLRequest(baseUrl: URL) -> URLRequest {
+        var urlRequest = URLRequest(url: url(baseUrl: baseUrl))
         urlRequest.httpMethod = method
         urlRequest.httpBody = body
         return urlRequest
