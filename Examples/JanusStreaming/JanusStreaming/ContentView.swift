@@ -1,12 +1,5 @@
-//
-//  ContentView.swift
-//  JanusStreaming
-//
-//  Created by Daniel Amarante on 7/16/20.
-//  Copyright © 2020 Alancorp. All rights reserved.
-//
-
 import SwiftUI
+import Janus
 
 struct ContentView: View {
     var body: some View {

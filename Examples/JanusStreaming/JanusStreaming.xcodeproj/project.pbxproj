@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		987AF9A324C0EF9000BD296D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A224C0EF9000BD296D /* Assets.xcassets */; };
 		987AF9A624C0EF9000BD296D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */; };
 		987AF9A924C0EF9000BD296D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */; };
+		987AF9B324C0EFE400BD296D /* Janus in Frameworks */ = {isa = PBXBuildFile; productRef = 987AF9B224C0EFE400BD296D /* Janus */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		987AF9A824C0EF9000BD296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		987AF9AA24C0EF9000BD296D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		987AF9B024C0EFD500BD296D /* Janus */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Janus; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				987AF9B324C0EFE400BD296D /* Janus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +43,10 @@
 		987AF99024C0EF8F00BD296D = {
 			isa = PBXGroup;
 			children = (
+				987AF9B024C0EFD500BD296D /* Janus */,
 				987AF99B24C0EF8F00BD296D /* JanusStreaming */,
 				987AF99A24C0EF8F00BD296D /* Products */,
+				987AF9B124C0EFE400BD296D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +80,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		987AF9B124C0EFE400BD296D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,6 +103,9 @@
 			dependencies = (
 			);
 			name = JanusStreaming;
+			packageProductDependencies = (
+				987AF9B224C0EFE400BD296D /* Janus */,
+			);
 			productName = JanusStreaming;
 			productReference = 987AF99924C0EF8F00BD296D /* JanusStreaming.app */;
 			productType = "com.apple.product-type.application";
@@ -342,6 +357,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		987AF9B224C0EFE400BD296D /* Janus */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Janus;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 987AF99124C0EF8F00BD296D /* Project object */;
 }
