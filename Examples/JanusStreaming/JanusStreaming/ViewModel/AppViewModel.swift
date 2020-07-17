@@ -7,6 +7,7 @@ class AppViewModel: ObservableObject {
     @Published var pluginAttached = false
     @Published var streams: [StreamInfo] = []
     @Published var selectedStream: StreamInfo?
+    @Published var started = false
     @Published var remoteVideoTrack: RTCVideoTrack?
 
     let session = JanusSession(baseUrl: URL(string: "https://janus.conf.meetecho.com/janus")!)
@@ -38,7 +39,11 @@ class AppViewModel: ObservableObject {
         guard let streamId = selectedStream?.id else { return }
         session.watch(streamId: streamId) { [unowned self] remoteSdp in
             self.webRTCClient.answer(remoteSdp: remoteSdp) { [unowned self] localSdp in
-                self.session.start(sdp: localSdp) {}
+                self.session.start(sdp: localSdp) { [unowned self] in
+                    DispatchQueue.main.async {
+                        self.started = true
+                    }
+                }
             }
         }
     }
