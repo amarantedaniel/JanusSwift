@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		987AF99D24C0EF8F00BD296D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF99C24C0EF8F00BD296D /* AppDelegate.swift */; };
 		987AF99F24C0EF8F00BD296D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */; };
-		987AF9A124C0EF8F00BD296D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF9A024C0EF8F00BD296D /* ContentView.swift */; };
+		987AF9A124C0EF8F00BD296D /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF9A024C0EF8F00BD296D /* AppView.swift */; };
 		987AF9A324C0EF9000BD296D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A224C0EF9000BD296D /* Assets.xcassets */; };
 		987AF9A624C0EF9000BD296D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */; };
 		987AF9A924C0EF9000BD296D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */; };
@@ -20,7 +20,7 @@
 		987AF99924C0EF8F00BD296D /* JanusStreaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JanusStreaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		987AF99C24C0EF8F00BD296D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		987AF9A024C0EF8F00BD296D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		987AF9A024C0EF8F00BD296D /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		987AF9A224C0EF9000BD296D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		987AF9A824C0EF9000BD296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,12 +62,12 @@
 			isa = PBXGroup;
 			children = (
 				987AF99C24C0EF8F00BD296D /* AppDelegate.swift */,
-				987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */,
-				987AF9A024C0EF8F00BD296D /* ContentView.swift */,
+				987AF9A024C0EF8F00BD296D /* AppView.swift */,
 				987AF9A224C0EF9000BD296D /* Assets.xcassets */,
-				987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */,
 				987AF9AA24C0EF9000BD296D /* Info.plist */,
+				987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */,
 				987AF9A424C0EF9000BD296D /* Preview Content */,
+				987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */,
 			);
 			path = JanusStreaming;
 			sourceTree = "<group>";
@@ -163,7 +163,7 @@
 			files = (
 				987AF99D24C0EF8F00BD296D /* AppDelegate.swift in Sources */,
 				987AF99F24C0EF8F00BD296D /* SceneDelegate.swift in Sources */,
-				987AF9A124C0EF8F00BD296D /* ContentView.swift in Sources */,
+				987AF9A124C0EF8F00BD296D /* AppView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
