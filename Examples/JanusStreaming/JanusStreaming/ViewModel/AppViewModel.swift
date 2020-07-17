@@ -51,7 +51,8 @@ class AppViewModel: ObservableObject {
 
 extension AppViewModel: WebRTCClientDelegate {
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate) {
-        session.trickle(candidate: candidate.sdp, sdpMLineIndex: Int(candidate.sdpMLineIndex), sdpMid: candidate.sdpMid!) {}
+        
+        session.trickle(candidate: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid) {}
     }
 
     func webRTCClient(_ client: WebRTCClient, didSetRemoteVideoTrack remoteVideoTrack: RTCVideoTrack) {

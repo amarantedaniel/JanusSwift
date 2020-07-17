@@ -7,7 +7,7 @@ struct TrickleRequest: Encodable {
 
     struct Candidate: Encodable {
         let candidate: String
-        let sdpMLineIndex: Int
-        let sdpMid: String
+        let sdpMLineIndex: Int32
+        let sdpMid: String?
     }
 }

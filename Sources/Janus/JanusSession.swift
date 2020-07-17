@@ -36,12 +36,12 @@ public class JanusSession {
         }
     }
 
-    public func trickle(candidate: String, sdpMLineIndex: Int, sdpMid: String, completion: @escaping () -> Void) {
+    public func trickle(candidate: String, sdpMLineIndex: Int32, sdpMid: String?, completion: @escaping () -> Void) {
         guard let sessionId = sessionId else { return }
         guard let handleId = handleId else { return }
         let transaction = "trickle"
-        let candidate = TrickleRequest.Candidate(candidate: candidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid)
-        let request = TrickleRequest(transaction: transaction, candidate: candidate)
+        let request = TrickleRequest(transaction: transaction,
+                                     candidate: .init(candidate: candidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid))
         apiClient.request(.trickle(sessionId, handleId, request)) { (_: Result<TrickleResponse, Error>) in
             completion()
         }
