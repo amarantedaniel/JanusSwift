@@ -14,6 +14,9 @@
 		987AF9A624C0EF9000BD296D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */; };
 		987AF9A924C0EF9000BD296D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */; };
 		987AF9B324C0EFE400BD296D /* Janus in Frameworks */ = {isa = PBXBuildFile; productRef = 987AF9B224C0EFE400BD296D /* Janus */; };
+		987AF9B924C1D7D000BD296D /* CheckBoxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF9B824C1D7D000BD296D /* CheckBoxItem.swift */; };
+		987AF9BB24C1DE7500BD296D /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF9BA24C1DE7500BD296D /* StreamView.swift */; };
+		987AF9BE24C1DEB000BD296D /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AF9BD24C1DEB000BD296D /* AppViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		987AF9A824C0EF9000BD296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		987AF9AA24C0EF9000BD296D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		987AF9B024C0EFD500BD296D /* Janus */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Janus; path = ../..; sourceTree = "<group>"; };
+		987AF9B824C1D7D000BD296D /* CheckBoxItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxItem.swift; sourceTree = "<group>"; };
+		987AF9BA24C1DE7500BD296D /* StreamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamView.swift; sourceTree = "<group>"; };
+		987AF9BD24C1DEB000BD296D /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,23 +67,20 @@
 		987AF99B24C0EF8F00BD296D /* JanusStreaming */ = {
 			isa = PBXGroup;
 			children = (
-				987AF99C24C0EF8F00BD296D /* AppDelegate.swift */,
-				987AF9A024C0EF8F00BD296D /* AppView.swift */,
-				987AF9A224C0EF9000BD296D /* Assets.xcassets */,
-				987AF9AA24C0EF9000BD296D /* Info.plist */,
-				987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */,
-				987AF9A424C0EF9000BD296D /* Preview Content */,
-				987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */,
+				987AF9BC24C1DE9400BD296D /* ViewModel */,
+				987AF9B724C1D75300BD296D /* SupportingFiles */,
+				987AF9B624C1D74100BD296D /* Configuration */,
+				987AF9B524C1D73900BD296D /* Views */,
 			);
 			path = JanusStreaming;
 			sourceTree = "<group>";
 		};
-		987AF9A424C0EF9000BD296D /* Preview Content */ = {
+		987AF9A424C0EF9000BD296D /* PreviewContent */ = {
 			isa = PBXGroup;
 			children = (
 				987AF9A524C0EF9000BD296D /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
+			path = PreviewContent;
 			sourceTree = "<group>";
 		};
 		987AF9B124C0EFE400BD296D /* Frameworks */ = {
@@ -85,6 +88,44 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		987AF9B524C1D73900BD296D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				987AF9A024C0EF8F00BD296D /* AppView.swift */,
+				987AF9B824C1D7D000BD296D /* CheckBoxItem.swift */,
+				987AF9BA24C1DE7500BD296D /* StreamView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		987AF9B624C1D74100BD296D /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				987AF99E24C0EF8F00BD296D /* SceneDelegate.swift */,
+				987AF99C24C0EF8F00BD296D /* AppDelegate.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		987AF9B724C1D75300BD296D /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				987AF9A224C0EF9000BD296D /* Assets.xcassets */,
+				987AF9AA24C0EF9000BD296D /* Info.plist */,
+				987AF9A724C0EF9000BD296D /* LaunchScreen.storyboard */,
+				987AF9A424C0EF9000BD296D /* PreviewContent */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		987AF9BC24C1DE9400BD296D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				987AF9BD24C1DEB000BD296D /* AppViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +204,10 @@
 			files = (
 				987AF99D24C0EF8F00BD296D /* AppDelegate.swift in Sources */,
 				987AF99F24C0EF8F00BD296D /* SceneDelegate.swift in Sources */,
+				987AF9BE24C1DEB000BD296D /* AppViewModel.swift in Sources */,
 				987AF9A124C0EF8F00BD296D /* AppView.swift in Sources */,
+				987AF9BB24C1DE7500BD296D /* StreamView.swift in Sources */,
+				987AF9B924C1D7D000BD296D /* CheckBoxItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,10 +344,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"JanusStreaming/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"JanusStreaming/SupportingFiles/PreviewContent\"";
 				DEVELOPMENT_TEAM = ZX7GUMJ35C;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = JanusStreaming/Info.plist;
+				INFOPLIST_FILE = JanusStreaming/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,10 +364,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"JanusStreaming/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"JanusStreaming/SupportingFiles/PreviewContent\"";
 				DEVELOPMENT_TEAM = ZX7GUMJ35C;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = JanusStreaming/Info.plist;
+				INFOPLIST_FILE = JanusStreaming/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

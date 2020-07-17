@@ -10,7 +10,7 @@ struct ListResult: Decodable {
     }
 }
 
-public struct StreamInfo: Decodable {
+public struct StreamInfo: Hashable, Decodable {
     public let id: Int
     public let description: String
 }
