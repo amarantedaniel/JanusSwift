@@ -4,6 +4,7 @@ import SwiftUI
 class AppViewModel: ObservableObject {
     @Published var sessionCreated = false
     @Published var pluginAttached = false
+    @Published var streams: [StreamInfo] = []
 
     let session = JanusSession(baseUrl: URL(string: "https://janus.conf.meetecho.com/janus")!)
 
@@ -16,6 +17,11 @@ class AppViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.pluginAttached = true
                 }
+                self.session.list { streams in
+                    DispatchQueue.main.async {
+                        self.streams = streams
+                    }
+                }
             }
         }
     }
@@ -26,14 +32,29 @@ struct AppView: View {
     var body: some View {
         NavigationView {
             Form {
-                CheckBoxItem(title: "Session created",
-                             isChecked: viewModel.sessionCreated)
-                CheckBoxItem(title: "Plugin attached",
-                             isChecked: viewModel.pluginAttached)
+                Section(header: Text("STATUS")) {
+                    CheckBoxItem(title: "Session created",
+                                 isChecked: viewModel.sessionCreated)
+                    CheckBoxItem(title: "Plugin attached",
+                                 isChecked: viewModel.pluginAttached)
+                }
+                Section(header: Text("STREAMS")) {
+                    ForEach(viewModel.streams, id: \.id) { stream in
+                        NavigationLink(destination: StreamView()) {
+                            Text(stream.description)
+                        }
+                    }
+                }
             }
             .navigationBarTitle("Janus Streaming")
             .onAppear(perform: viewModel.createSession)
         }
+    }
+}
+
+struct StreamView: View {
+    var body: some View {
+        Text("oi")
     }
 }
 

@@ -77,6 +77,18 @@ public class JanusSession {
         }
     }
 
+    public func list(completion: @escaping ([StreamInfo]) -> Void) {
+        guard let sessionId = sessionId else { return }
+        guard let handleId = handleId else { return }
+        let transaction = "list"
+        let request = ListRequest(transaction: transaction)
+        apiClient.request(.list(sessionId, handleId, request)) { (result: Result<ListResult, Error>) in
+            if case let .success(response) = result {
+                completion(response.plugindata.data.list)
+            }
+        }
+    }
+
     public func start(sdp: String, completion: @escaping () -> Void) {
         guard let sessionId = sessionId else { return }
         guard let handleId = handleId else { return }

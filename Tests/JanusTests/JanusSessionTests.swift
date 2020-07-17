@@ -72,4 +72,18 @@ final class JanusSessionTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.001)
     }
+    
+    func test_list_callsCallbackWithListOfStreams() {
+        let expectation = XCTestExpectation()
+        var fetchedStreams = [StreamInfo]()
+        session.sessionId = 123
+        session.handleId = 456
+        session.list { (streams) in
+            fetchedStreams  = streams
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.001)
+        XCTAssertEqual(fetchedStreams[0].description, "stream")
+        XCTAssertEqual(fetchedStreams[0].id, 10)
+    }
 }

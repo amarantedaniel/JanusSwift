@@ -34,6 +34,10 @@ class APIClientStub: APIClientProtocol {
             case nil:
                 break
             }
+        case .list(_, _, _):
+            let streams = [StreamInfo(id: 10, description: "stream")]
+            let response = ListResult(plugindata: .init(data: .init(list: streams)))
+            completion(.success(response as! T))
         }
     }
 

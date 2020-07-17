@@ -6,13 +6,14 @@ enum APIRoute: URLRequestConvertible {
     case trickle(Int, Int, TrickleRequest)
     case watch(Int, Int, WatchRequest)
     case start(Int, Int, StartRequest)
+    case list(Int, Int, ListRequest)
     case longPoll(Int)
     
     private var method: String {
         switch self {
         case .longPoll:
             return "GET"
-        case .create, .attachPlugin, .watch, .start, .trickle:
+        case .create, .attachPlugin, .watch, .start, .trickle, .list:
             return "POST"
         }
     }
@@ -31,6 +32,8 @@ enum APIRoute: URLRequestConvertible {
             return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
         case let .trickle(sessionId, handleId, _):
             return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
+        case let .list(sessionId, handleId, _):
+            return baseUrl.appendingPathComponent("/\(sessionId)/\(handleId)")
         }
     }
     
@@ -46,6 +49,8 @@ enum APIRoute: URLRequestConvertible {
         case let .start(_, _, request):
             return try? encoder.encode(request)
         case let .trickle(_, _, request):
+            return try? encoder.encode(request)
+        case let .list(_, _, request):
             return try? encoder.encode(request)
         case .longPoll:
             return nil
