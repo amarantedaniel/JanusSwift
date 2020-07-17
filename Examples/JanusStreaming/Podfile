@@ -1,0 +1,5 @@
+target 'JanusStreaming' do  
+  use_frameworks!
+
+  pod 'GoogleWebRTC', '~> 1.1'
+end
