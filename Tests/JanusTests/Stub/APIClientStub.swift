@@ -4,7 +4,7 @@ import Foundation
 class APIClientStub: APIClientProtocol {
     private var longpollRequest: LongpollRequest?
 
-    func request<T: Decodable>(_ route: APIRoute, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Decodable>(_ route: APIRoute, completion: @escaping (Result<T, APIError>) -> Void) {
         switch route {
         case let .create(request):
             let response = CreateResponse(transaction: request.transaction, data: .init(id: 123))

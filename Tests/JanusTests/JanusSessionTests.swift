@@ -2,10 +2,10 @@
 import XCTest
 
 final class JanusSessionTests: XCTestCase {
-    var session: JanusSession!
+    var session: JanusAPI!
 
     override func setUp() {
-        session = JanusSession(apiClient: APIClientStub())
+        session = JanusAPI(apiClient: APIClientStub())
     }
 
     func test_create_shouldStoreSessionIdAndCallCallback() {

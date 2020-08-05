@@ -14,7 +14,7 @@ public class JanusAPI {
     public func createSession(completion: @escaping (Int) -> Void) {
         let transactionId = "create"
         let request = CreateRequest(transaction: transactionId)
-        apiClient.request(.create(request)) { (result: Result<CreateResponse, Error>) in
+        apiClient.request(.create(request)) { (result: Result<CreateResponse, APIError>) in
             if case let .success(response) = result {
                 completion(response.data.id)
             }
@@ -24,7 +24,7 @@ public class JanusAPI {
     public func attachPlugin(sessionId: Int, plugin: Plugin, completion: @escaping (Int) -> Void) {
         let transaction = "attach"
         let request = AttachPluginRequest(transaction: transaction, plugin: plugin)
-        apiClient.request(.attachPlugin(sessionId, request)) { (result: Result<AttachPluginResponse, Error>) in
+        apiClient.request(.attachPlugin(sessionId, request)) { (result: Result<AttachPluginResponse, APIError>) in
             if case let .success(response) = result {
                 completion(response.data.id)
             }
@@ -42,7 +42,7 @@ public class JanusAPI {
         let transaction = "trickle"
         let request = TrickleRequest(transaction: transaction,
                                      candidate: .init(candidate: candidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid))
-        apiClient.request(.trickle(sessionId, handleId, request)) { (_: Result<TrickleResponse, Error>) in
+        apiClient.request(.trickle(sessionId, handleId, request)) { (_: Result<TrickleResponse, APIError>) in
             completion()
         }
     }
@@ -75,9 +75,9 @@ public class JanusAPI {
         }
     }
 
-    private func handleWatchResult(sessionId: Int, result: Result<WatchResponse, Error>, completion: @escaping (String) -> Void) {
+    private func handleWatchResult(sessionId: Int, result: Result<WatchResponse, APIError>, completion: @escaping (String) -> Void) {
         if case .success = result {
-            self.sendLongPoll(sessionId: sessionId) { (result: Result<LongPollWatchResult, Error>) in
+            self.sendLongPoll(sessionId: sessionId) { (result: Result<LongPollWatchResult, APIError>) in
                 if case let .success(response) = result {
                     completion(response.jsep.sdp)
                 }
@@ -88,7 +88,7 @@ public class JanusAPI {
     public func list(sessionId: Int, handleId: Int, completion: @escaping ([StreamInfo]) -> Void) {
         let transaction = "list"
         let request = ListRequest(transaction: transaction)
-        apiClient.request(.list(sessionId, handleId, request)) { (result: Result<ListResult, Error>) in
+        apiClient.request(.list(sessionId, handleId, request)) { (result: Result<ListResult, APIError>) in
             if case let .success(response) = result {
                 completion(response.plugindata.data.list)
             }
@@ -99,16 +99,16 @@ public class JanusAPI {
         let transaction = "start"
         let jsep = JSEP(type: .answer, sdp: sdp)
         let request = StartRequest(transaction: transaction, jsep: jsep)
-        apiClient.request(.start(sessionId, handleId, request)) { (result: Result<StartResponse, Error>) in
+        apiClient.request(.start(sessionId, handleId, request)) { (result: Result<StartResponse, APIError>) in
             if case .success = result {
-                self.sendLongPoll(sessionId: sessionId) { (_: Result<LongPollStartResult, Error>) in
+                self.sendLongPoll(sessionId: sessionId) { (_: Result<LongPollStartResult, APIError>) in
                     completion()
                 }
             }
         }
     }
 
-    private func sendLongPoll<T: Decodable>(sessionId: Int, completion: @escaping (Result<T, Error>) -> Void) {
+    private func sendLongPoll<T: Decodable>(sessionId: Int, completion: @escaping (Result<T, APIError>) -> Void) {
         apiClient.request(.longPoll(sessionId), completion: completion)
     }
 }
