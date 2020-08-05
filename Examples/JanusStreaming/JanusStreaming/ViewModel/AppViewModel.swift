@@ -3,8 +3,8 @@ import SwiftUI
 import WebRTC
 
 class AppViewModel: ObservableObject {
-    @Published var sessionCreated = false
-    @Published var pluginAttached = false
+    @Published var sessionId: Int?
+    @Published var handleId: Int?
     @Published var streams: [StreamInfo] = []
     @Published var selectedStream: StreamInfo?
     @Published var started = false
@@ -18,15 +18,15 @@ class AppViewModel: ObservableObject {
     }
 
     func setup() {
-        session.createSession { [unowned self] in
+        session.createSession { [unowned self] sessionId in
             DispatchQueue.main.async {
-                self.sessionCreated = true
+                self.sessionId = sessionId
             }
-            self.session.attachPlugin(plugin: .streaming) {
+            self.session.attachPlugin(sessionId: sessionId, plugin: .streaming) { [unowned self] handleId in
                 DispatchQueue.main.async {
-                    self.pluginAttached = true
+                    self.handleId = handleId
                 }
-                self.session.list { streams in
+                self.session.list(sessionId: sessionId, handleId: handleId) { streams in
                     DispatchQueue.main.async {
                         self.streams = streams
                     }
@@ -36,10 +36,12 @@ class AppViewModel: ObservableObject {
     }
 
     func watch() {
+        guard let sessionId = sessionId else { return }
+        guard let handleId = handleId else { return }
         guard let streamId = selectedStream?.id else { return }
-        session.watch(streamId: streamId) { [unowned self] remoteSdp in
+        session.watch(sessionId: sessionId, handleId: handleId, streamId: streamId) { [unowned self] remoteSdp in
             self.webRTCClient.answer(remoteSdp: remoteSdp) { [unowned self] localSdp in
-                self.session.start(sdp: localSdp) { [unowned self] in
+                self.session.start(sessionId: sessionId, handleId: handleId, sdp: localSdp) { [unowned self] in
                     DispatchQueue.main.async {
                         self.started = true
                     }
@@ -51,8 +53,13 @@ class AppViewModel: ObservableObject {
 
 extension AppViewModel: WebRTCClientDelegate {
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate) {
-        
-        session.trickle(candidate: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid) {}
+        guard let sessionId = sessionId else { return }
+        guard let handleId = handleId else { return }
+        session.trickle(sessionId: sessionId,
+                        handleId: handleId,
+                        candidate: candidate.sdp,
+                        sdpMLineIndex: candidate.sdpMLineIndex,
+                        sdpMid: candidate.sdpMid) {}
     }
 
     func webRTCClient(_ client: WebRTCClient, didSetRemoteVideoTrack remoteVideoTrack: RTCVideoTrack) {

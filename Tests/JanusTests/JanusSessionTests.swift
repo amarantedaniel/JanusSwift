@@ -10,29 +10,30 @@ final class JanusSessionTests: XCTestCase {
 
     func test_create_shouldStoreSessionIdAndCallCallback() {
         let expectation = XCTestExpectation()
+        var sessionId: Int?
         session.createSession {
+            sessionId = $0
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.001)
-        XCTAssertEqual(session.sessionId, 123)
+        XCTAssertEqual(sessionId, 123)
     }
 
     func test_attachPlugin_withStreamingPlugin_shouldStoreHandleIdAndCallCallback() {
         let expectation = XCTestExpectation()
-        session.sessionId = 123
-        session.attachPlugin(plugin: .streaming) {
+        var handleId: Int?
+        session.attachPlugin(sessionId: 123, plugin: .streaming) {
+            handleId = $0
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.001)
-        XCTAssertEqual(session.handleId, 456)
+        XCTAssertEqual(handleId, 456)
     }
 
     func test_watch_withStringId_ShouldReturnSdp() {
         let expectation = XCTestExpectation()
         var generatedSdp: String?
-        session.sessionId = 123
-        session.handleId = 456
-        session.watch(streamId: "streamId") { sdp in
+        session.watch(sessionId: 123, handleId: 456, streamId: "streamId") { sdp in
             generatedSdp = sdp
             expectation.fulfill()
         }
@@ -43,9 +44,7 @@ final class JanusSessionTests: XCTestCase {
     func test_watch_withIntId_ShouldReturnSdp() {
         let expectation = XCTestExpectation()
         var generatedSdp: String?
-        session.sessionId = 123
-        session.handleId = 456
-        session.watch(streamId: 9999) { sdp in
+        session.watch(sessionId: 123, handleId: 456, streamId: 9999) { sdp in
             generatedSdp = sdp
             expectation.fulfill()
         }
@@ -55,31 +54,25 @@ final class JanusSessionTests: XCTestCase {
 
     func test_start_callsCallback() {
         let expectation = XCTestExpectation()
-        session.sessionId = 123
-        session.handleId = 456
-        session.start(sdp: "fake-sdp-answer") {
+        session.start(sessionId: 123, handleId: 456, sdp: "fake-sdp-answer") {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.001)
     }
-    
+
     func test_trickle_callsCallback() {
         let expectation = XCTestExpectation()
-        session.sessionId = 123
-        session.handleId = 456
-        session.trickle(candidate: "candidate", sdpMLineIndex: 0, sdpMid: "video") {
+        session.trickle(sessionId: 123, handleId: 456, candidate: "candidate", sdpMLineIndex: 0, sdpMid: "video") {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.001)
     }
-    
+
     func test_list_callsCallbackWithListOfStreams() {
         let expectation = XCTestExpectation()
         var fetchedStreams = [StreamInfo]()
-        session.sessionId = 123
-        session.handleId = 456
-        session.list { (streams) in
-            fetchedStreams  = streams
+        session.list(sessionId: 123, handleId: 456) { streams in
+            fetchedStreams = streams
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.001)

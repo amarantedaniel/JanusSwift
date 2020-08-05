@@ -8,9 +8,9 @@ struct AppView: View {
             Form {
                 Section(header: Text("STATUS")) {
                     CheckBoxItem(title: "Session created",
-                                 isChecked: viewModel.sessionCreated)
+                                 isChecked: viewModel.sessionId != nil)
                     CheckBoxItem(title: "Plugin attached",
-                                 isChecked: viewModel.pluginAttached)
+                                 isChecked: viewModel.handleId !=  nil)
                 }
                 Section(header: Text("STREAMS")) {
                     ForEach(viewModel.streams, id: \.id) { stream in
