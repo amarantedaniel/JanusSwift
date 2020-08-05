@@ -1,6 +1,6 @@
 import Foundation
 
-public class JanusSession {
+public class JanusAPI {
     private let apiClient: APIClientProtocol
 
     public init(baseUrl: URL) {

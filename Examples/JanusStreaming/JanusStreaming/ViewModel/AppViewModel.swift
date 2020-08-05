@@ -10,7 +10,7 @@ class AppViewModel: ObservableObject {
     @Published var started = false
     @Published var remoteVideoTrack: RTCVideoTrack?
 
-    let session = JanusSession(baseUrl: URL(string: "https://janus.conf.meetecho.com/janus")!)
+    let session = JanusAPI(baseUrl: URL(string: "https://janus.conf.meetecho.com/janus")!)
     let webRTCClient = WebRTCClient()
 
     init() {
