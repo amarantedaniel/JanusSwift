@@ -3,7 +3,12 @@ import SwiftUI
 import WebRTC
 
 class AppViewModel: ObservableObject {
-    @Published var sessionId: Int?
+    @Published var sessionId: Int? {
+        didSet {
+            startKeepAliveTimer()
+        }
+    }
+
     @Published var handleId: Int?
     @Published var streams: [StreamInfo] = []
     @Published var selectedStream: StreamInfo?
@@ -12,12 +17,21 @@ class AppViewModel: ObservableObject {
 
     let session = JanusAPI(baseUrl: URL(string: "https://janus.conf.meetecho.com/janus")!)
     let webRTCClient = WebRTCClient()
+    
+    private lazy var timer: DispatchSourceTimer = {
+        let timer = DispatchSource.makeTimerSource()
+        timer.schedule(deadline: .now() + .seconds(50), repeating: .seconds(50))
+        timer.setEventHandler { [unowned self] in
+            self.session.keepAlive(sessionId: self.sessionId!)
+        }
+        return timer
+    }()
 
     init() {
         webRTCClient.delegate = self
     }
 
-    func setup() {
+    private func setup() {
         session.createSession { [unowned self] sessionId in
             DispatchQueue.main.async {
                 self.sessionId = sessionId
@@ -26,7 +40,7 @@ class AppViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.handleId = handleId
                 }
-                self.session.list(sessionId: sessionId, handleId: handleId) { streams in
+                self.session.list(sessionId: sessionId, handleId: handleId) { [unowned self] streams in
                     DispatchQueue.main.async {
                         self.streams = streams
                     }
@@ -35,7 +49,11 @@ class AppViewModel: ObservableObject {
         }
     }
 
-    func watch() {
+    private func startKeepAliveTimer() {
+        timer.resume()
+    }
+
+    private func watch() {
         guard let sessionId = sessionId else { return }
         guard let handleId = handleId else { return }
         guard let streamId = selectedStream?.id else { return }
@@ -59,7 +77,7 @@ extension AppViewModel: WebRTCClientDelegate {
                         handleId: handleId,
                         candidate: candidate.sdp,
                         sdpMLineIndex: candidate.sdpMLineIndex,
-                        sdpMid: candidate.sdpMid) {}
+                        sdpMid: candidate.sdpMid)
     }
 
     func webRTCClient(_ client: WebRTCClient, didSetRemoteVideoTrack remoteVideoTrack: RTCVideoTrack) {

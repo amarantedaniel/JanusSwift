@@ -7,10 +7,8 @@ struct StreamView: View {
             Form {
                 CheckBoxItem(title: "Stream Started", isChecked: viewModel.started)
                 CheckBoxItem(title: "VideoView Ready", isChecked: viewModel.remoteVideoTrack != nil)
-                #if arch(arm64)
                 VideoView(remoteVideoTrack: viewModel.remoteVideoTrack)
                     .frame(height: 200)
-                #endif
             }
         }
         .onAppear(perform: viewModel.watch)
