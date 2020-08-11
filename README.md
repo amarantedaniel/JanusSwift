@@ -29,4 +29,4 @@ Currently the only supported plugin is streaming and not all of the routes are t
 
 ## Example App
 
-There is an example on how to integrate Janus streaming plugin with WebRTC using SwiftUI. It's using `RTCMTLVideoView` only for now which means it won't work on iOS simulators.
+There is an example on how to integrate Janus streaming plugin with WebRTC using SwiftUI.
