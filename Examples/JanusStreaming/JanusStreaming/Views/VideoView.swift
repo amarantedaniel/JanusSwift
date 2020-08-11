@@ -1,6 +1,7 @@
 import SwiftUI
 import WebRTC
 
+#if arch(arm64)
 struct VideoView: UIViewRepresentable {
     let remoteVideoTrack: RTCVideoTrack?
 
@@ -14,3 +15,16 @@ struct VideoView: UIViewRepresentable {
         remoteVideoTrack?.add(uiView)
     }
 }
+#else
+struct VideoView: UIViewRepresentable {
+    let remoteVideoTrack: RTCVideoTrack?
+
+    func makeUIView(context: Context) -> RTCEAGLVideoView {
+        RTCEAGLVideoView(frame: .zero)
+    }
+
+    func updateUIView(_ videoView: RTCEAGLVideoView, context: Context) {
+        remoteVideoTrack?.add(videoView)
+    }
+}
+#endif

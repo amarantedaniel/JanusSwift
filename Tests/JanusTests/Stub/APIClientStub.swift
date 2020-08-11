@@ -38,6 +38,9 @@ class APIClientStub: APIClientProtocol {
             let streams = [StreamInfo(id: 10, description: "stream")]
             let response = ListResult(plugindata: .init(data: .init(list: streams)))
             completion(.success(response as! T))
+        case .keepAlive(_, _):
+            let response = KeepAliveResponse()
+            completion(.success(response as! T))
         }
     }
 

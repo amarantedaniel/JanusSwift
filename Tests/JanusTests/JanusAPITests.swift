@@ -79,4 +79,12 @@ final class JanusSessionTests: XCTestCase {
         XCTAssertEqual(fetchedStreams[0].description, "stream")
         XCTAssertEqual(fetchedStreams[0].id, 10)
     }
+
+    func test_keepAlive_callsCallback() {
+        let expectation = XCTestExpectation()
+        session.keepAlive(sessionId: 123) {
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.001)
+    }
 }

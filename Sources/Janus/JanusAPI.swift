@@ -113,4 +113,12 @@ public class JanusAPI {
             completion?(result)
         }
     }
+
+    public func keepAlive(sessionId: Int, completion: (() -> Void)? = nil) {
+        let transaction = "keepAlive"
+        let request = KeepAliveRequest(transaction: transaction)
+        apiClient.request(.keepAlive(sessionId, request)) { (_: Result<KeepAliveResponse, APIError>) in
+            completion?()
+        }
+    }
 }
